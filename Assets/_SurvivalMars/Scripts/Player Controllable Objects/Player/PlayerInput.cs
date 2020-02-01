@@ -39,6 +39,11 @@ public class PlayerInput : MonoBehaviour
 			m_playerController.SetLookInput(lookInput);
 		}
 
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			m_playerController.OnEnterInputDown();
+		}
+
 		if (m_playerInputController.GetButtonDown("Jump"))
 		{
 			m_playerController.OnJumpInputDown();

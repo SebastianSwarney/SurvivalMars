@@ -47,8 +47,11 @@ public class PlayerPossesionController : MonoBehaviour
 
 	public void ControllRover()
 	{
-		m_playerChar.Deactivate();
-		m_rover.Activate();
+		if (m_rover.m_hasFlashlight)
+		{
+			m_playerChar.Deactivate();
+			m_rover.Activate();
+		}
 	}
 
 	public void ControllPlayer()
