@@ -46,7 +46,7 @@ public class Waypoint_Manager : MonoBehaviour
         return m_waypointSectors[p_waypointSector].m_waypoints[closestPoint];
     }
 
-    public Vector3 GiveNewPosition(int p_radiusSector)
+    public Vector3 GiveNewPointInRadius(int p_radiusSector)
     {
         return m_radiusSectors[p_radiusSector].m_radiusPoints.GiveNewPosition();
     }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class EnemyEvent: UnityEngine.Events.UnityEvent { }
 public class EnemyController : MonoBehaviour
 {
-    public enum EnemyState { Wandering, Chase, Respawn }
+    public enum EnemyState { Wandering, Chase, Died,Respawn }
 
     public EnemyState m_currentState;
 
@@ -40,6 +42,16 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
+    [System.Serializable]
+    public struct EnemyEvents
+    {
+        public EnemyEvent m_playerSpottedEvent;
+        public EnemyEvent m_playerLostEvent;
+        public EnemyEvent m_respawnEvent;
+        public EnemyEvent m_diedEvent;
+    }
+
+    public EnemyEvents m_enemyEvents;
     private void Update()
     {
         CheckStates();
@@ -57,7 +69,6 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Chase:
                 if (m_enemyDetection.PlayerInRadius())
                 {
-                    print("Move To Player");
                     m_movementController.MoveToPlayer();
                 }
                 else
@@ -83,9 +94,13 @@ public class EnemyController : MonoBehaviour
                 m_enemyDetection.SetCollidersState(true);
                 break;
             case EnemyState.Chase:
+                m_enemyEvents.m_playerSpottedEvent.Invoke();
                 m_enemyDetection.SetCollidersState(false);
                 break;
             case EnemyState.Respawn:
+
+                break;
+            case EnemyState.Died:
                 m_enemyObject.SetActive(false);
                 StartCoroutine(RespawnTime());
                 break;
@@ -105,7 +120,10 @@ public class EnemyController : MonoBehaviour
     private void Respawn()
     {
         transform.position = m_repsawnPosition.position;
-        m_enemyObject.SetActive(false);
+        transform.rotation = m_repsawnPosition.rotation;
+        m_enemyObject.SetActive(true);
+        m_enemyEvents.m_respawnEvent.Invoke();
+        SwitchState(EnemyState.Wandering);
     }
 
     public void Stunned()
@@ -138,4 +156,9 @@ public class EnemyController : MonoBehaviour
         SwitchState(EnemyState.Wandering);
     }
 
+    public void KillMe()
+    {
+        m_movementController.StopMovement();
+        SwitchState(EnemyState.Died);
+    }
 }

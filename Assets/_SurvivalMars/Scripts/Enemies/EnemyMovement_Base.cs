@@ -7,7 +7,6 @@ public abstract class EnemyMovement_Base : MonoBehaviour
 
     public GameObject m_playerObject;
     public Vector3 m_lastPlayerPostion;
-
     public abstract void IdleMovement();
 
     public abstract void MoveToPlayer();
@@ -20,4 +19,6 @@ public abstract class EnemyMovement_Base : MonoBehaviour
     {
         m_lastPlayerPostion = m_playerObject.transform.position;
     }
+
+    public abstract void StopMovement();
 }

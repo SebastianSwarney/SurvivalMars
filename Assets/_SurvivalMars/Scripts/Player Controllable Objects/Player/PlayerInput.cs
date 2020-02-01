@@ -39,7 +39,7 @@ public class PlayerInput : MonoBehaviour
 			m_playerController.SetLookInput(lookInput);
 		}
 
-		if (Input.GetKeyDown(KeyCode.E))
+		if (m_playerInputController.GetButtonDown("Enter"))
 		{
 			m_playerController.OnEnterInputDown();
 		}

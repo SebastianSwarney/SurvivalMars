@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement_SmallEnemy : EnemyMovement_Base
+public class EnemyMovement_BigEnemy : EnemyMovement_Base
 {
-    private Waypoints m_currentWaypoint;
     public int m_sectorIndex;
     private Waypoint_Manager m_waypointManager;
     public float m_stoppingDistance, m_brakingDistance;
     public float m_chaseSpeed;
     public float m_idleSpeed;
+    private Vector3 m_targetPosition;
+
     [Header("Rotation")]
     public float m_rotateSpeed;
     public float m_rotationSensitivity = 5;
+
+    [Header("Floating Values")]
+    public LayerMask m_floatingLayer;
+    public float m_targetHeightAboveGround;
+    public float m_maxRaycastDistance;
+    [Tooltip("The amount of influence the height above the ground has.")]
+    public float m_targetHeightWeight;
+    public float m_maxBoost;
+    public float m_heightStoppingDistance;
+    public float m_heightBrakingDistance;
 
     private Rigidbody m_rb;
 
@@ -23,26 +34,26 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
     private void Start()
     {
         m_waypointManager = Waypoint_Manager.Instance;
-        m_currentWaypoint = m_waypointManager.GetClosestWaypoint(m_sectorIndex, transform.position);
     }
     public override void IdleMovement()
     {
-        if (NearPosition(m_idleSpeed, m_brakingDistance, m_stoppingDistance, m_currentWaypoint.transform.position))
+        if (NearPosition(m_idleSpeed, m_brakingDistance, m_stoppingDistance, new Vector3(m_targetPosition.x, transform.position.y, m_targetPosition.z)))
         {
-            m_currentWaypoint = m_currentWaypoint.m_nextWaypoint;
+            m_targetPosition = m_waypointManager.GiveNewPointInRadius(m_sectorIndex);
         }
     }
 
-   
+    
     public override void MoveToLastKnownPosition()
     {
-        NearPosition(m_chaseSpeed, m_brakingDistance, m_stoppingDistance, m_lastPlayerPostion);
+        NearPosition(m_chaseSpeed, m_brakingDistance, m_stoppingDistance, new Vector3(m_lastPlayerPostion.x, transform.position.y, m_lastPlayerPostion.z));
     }
 
     public override void MoveToPlayer()
     {
-        NearPosition(m_chaseSpeed, 0, 0, m_playerObject.transform.position);
+        NearPosition(m_chaseSpeed, 0, 0, new Vector3(m_playerObject.transform.position.x, transform.position.y, m_playerObject.transform.position.z));
     }
+
 
 
     /// <summary>
@@ -83,10 +94,46 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
         {
             print("Current Speed : " + currentSpeed);
         }
-        m_rb.velocity = new Vector3(transform.forward.x, m_rb.velocity.y, transform.forward.z) * currentSpeed;
+        m_rb.velocity = new Vector3(transform.forward.x * currentSpeed, m_rb.velocity.y, transform.forward.z * currentSpeed) ;
+
+
+        FloatAboveGround();
         return nearPos;
     }
 
+    private void FloatAboveGround()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down,out hit, m_maxRaycastDistance, m_floatingLayer))
+        {
+
+            float distance = Vector3.Distance(transform.position, hit.point) - m_targetHeightAboveGround;
+            Distance = distance;
+            float newVelocity = 0;
+
+
+            if (Mathf.Abs(distance) > m_brakingDistance )
+            {
+                newVelocity = -m_maxBoost * Mathf.Sign(distance);
+                print("Max Boost");
+            }
+            else
+            {
+                if (Mathf.Abs(distance) > m_stoppingDistance)
+                {
+                    newVelocity = -m_maxBoost * (Mathf.Abs(distance) / m_brakingDistance) * Mathf.Sign(distance);
+                    print("Adjust Boost");
+                }
+                print("No Boost");
+                
+            }
+
+
+            m_rb.velocity = new Vector3(m_rb.velocity.x, newVelocity, m_rb.velocity.z);
+        }
+
+    }
+    public float Distance;
 
     public override void RotateToPoint(Vector3 p_point)
     {
@@ -104,18 +151,10 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
             rotationSide = 1;
             rotationAmount = 1.5f;
         }
-        transform.Rotate(transform.up, ((rotationAmount > 1 ) ? m_rotateSpeed : rotationAmount * m_rotateSpeed) * Mathf.Sign(rotationSide)); 
-        if (m_rb.velocity.magnitude > 10)
-        {
-            print("RB Vel: " + m_rb.velocity.magnitude);
-        }
+        transform.Rotate(transform.up, ((rotationAmount > 1) ? m_rotateSpeed : rotationAmount * m_rotateSpeed) * Mathf.Sign(rotationSide));
 
     }
 
-    public void GetNewWaypoint()
-    {
-        m_currentWaypoint = m_waypointManager.GetClosestWaypoint(m_sectorIndex, transform.position);
-    }
 
     public override void StopMovement()
     {
