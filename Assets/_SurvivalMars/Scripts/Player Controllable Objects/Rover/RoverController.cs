@@ -30,10 +30,16 @@ public class RoverController : MonoBehaviour
 	private Vector3 m_averageRotation;
 	private float m_averageDistance;
 	private Vector2 m_input;
+	public Camera m_viewCamera;
+
+	public Transform m_playerHoldPos;
+
+	public float m_exitDst;
 
 	private void Start()
 	{
 		m_body = GetComponentInParent<Rigidbody>();
+		//m_viewCamera = GetComponentInChildren<Camera>();
 	}
 
 	private void FixedUpdate()
@@ -46,14 +52,69 @@ public class RoverController : MonoBehaviour
 		Float();
 	}
 
+	public void OnPlayerExitInputDown()
+	{
+		OnPlayerExit();
+	}
+
+	private void OnPlayerExit()
+	{
+		PlayerPossesionController.Instance.ControllPlayer();
+	}
+
 	public void Deactivate()
 	{
 		m_movementControllState = MovementControllState.MovementDisabled;
+		m_viewCamera.enabled = false;
+
+		PlayerPossesionController.Instance.m_playerChar.transform.position = CheckExitPos();
+		PlayerPossesionController.Instance.m_playerChar.transform.parent = null;
+	}
+
+	private Vector3 CheckExitPos()
+	{
+		Vector3 exitPos = Vector3.zero;
+
+		/*
+		RaycastHit hitRight;
+
+		if (Physics.SphereCast(transform.position, 1f, transform.right, out hitRight, m_exitDst, m_groundMask))
+		{
+
+		}
+		else
+		{
+			exitPos = transform.position + (transform.right * m_exitDst);
+
+			return exitPos;
+		}
+
+		RaycastHit hitLeft;
+
+		if (Physics.SphereCast(transform.position, 1f, -transform.right, out hitLeft, m_exitDst, m_groundMask))
+		{
+
+		}
+		else
+		{
+			exitPos = transform.position + (-transform.right * m_exitDst);
+
+			return exitPos;
+		}
+
+		exitPos = transform.position + (transform.up * m_exitDst);
+		*/
+
+		return exitPos;
 	}
 
 	public void Activate()
 	{
 		m_movementControllState = MovementControllState.MovementEnabled;
+		m_viewCamera.enabled = true;
+
+		PlayerPossesionController.Instance.m_playerChar.transform.parent = m_playerHoldPos;
+		PlayerPossesionController.Instance.m_playerChar.transform.position = m_playerHoldPos.position;
 	}
 
 	public void SetMovementInput(Vector2 p_input)

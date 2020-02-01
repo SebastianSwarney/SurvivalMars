@@ -43,13 +43,22 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				const int chunkCount = 100;
+				const int chunkCount = 200;
 				const float fChunkCount = float(chunkCount);
-				int2 chunk = int2(i.uv * chunkCount);
-				float2 relativeUv = i.uv - float2(chunk) / fChunkCount;
-				float2 uv = relativeUv + float2(chunk + chunk % 3 - int2(1,1)) / fChunkCount;
-				fixed4 col = tex2D(_MainTex, uv);
-				col.rgb = col.rgb;
+				const int2 chunk = int2(i.uv * chunkCount);
+				const int n = chunk.x + chunk.y * chunkCount;
+				float2 uv = i.uv;
+				const int t = int(_Time.y * 20);
+				if (t % 3 + t % 5 + t % 7 < 2)
+				{
+					const float2 relativeUv = i.uv - float2(chunk) / fChunkCount;
+					const float2 seed = float2(sin(101.0 * n), sin(43.0 * n));
+					const int2 shift = int2(sign(seed));
+					uv = relativeUv + float2(chunk + shift) / fChunkCount;
+				}
+				uv.x *= 1.0 + .02 * float(frac(_Time.y / 10) < float(n) / fChunkCount / fChunkCount);
+				fixed4 raw = tex2D(_MainTex, uv);
+				fixed4 col = fixed4(0.0, float(raw.x + raw.y + raw.z > 0), 0.0, 1);
 				return col;
 			}
 			ENDCG
