@@ -9,6 +9,8 @@ public class PlayerControllerEvent : UnityEvent { }
 
 public class PlayerController : MonoBehaviour
 {
+	public bool m_isPlaying;
+
 	public enum MovementControllState { MovementEnabled, MovementDisabled }
 	public enum GravityState { GravityEnabled, GravityDisabled }
 	public enum DamageState { Vulnerable, Invulnerable }
@@ -114,6 +116,16 @@ public class PlayerController : MonoBehaviour
 		CalculateGroundPhysics();
 
 		CameraRotation();
+	}
+
+	public void Deactivate()
+	{
+		m_states.m_movementControllState = MovementControllState.MovementDisabled;
+	}
+
+	public void Activate()
+	{
+		m_states.m_movementControllState = MovementControllState.MovementEnabled;
 	}
 
 	#region Input Code

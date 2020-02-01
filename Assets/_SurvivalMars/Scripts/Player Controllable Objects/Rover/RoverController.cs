@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class RoverController : MonoBehaviour
 {
+	public enum MovementControllState { MovementEnabled, MovementDisabled }
+	public MovementControllState m_movementControllState;
+
 	public bool m_hasFlashlight;
 
 	public Transform m_leftMotor;
 	public Transform m_rightMotor;
 
-	public float m_speed;
+	public float m_movementSpeed;
 
 	public Transform[] m_bottomThrusters;
 
 	public LayerMask m_groundMask;
 
 	public float m_targetDistanceFromGround;
+	public float m_targetDistanceFromGroundDeactivated;
 
 	public float m_rotationAdjustSpeed;
 	public float m_roverHeightAdjustSpeed;
@@ -34,20 +38,22 @@ public class RoverController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		//ThrusterMovement(m_leftMotor, m_input.x, m_speed);
-		//ThrusterMovement(m_rightMotor, m_input.x, m_speed);
-
-		if (m_hasFlashlight)
+		if (m_movementControllState == MovementControllState.MovementEnabled)
 		{
 			MoveRover();
-			Rotate();
+		}
 
-			m_body.useGravity = false;
-		}
-		else
-		{
-			m_body.useGravity = true;
-		}
+		Float();
+	}
+
+	public void Deactivate()
+	{
+		m_movementControllState = MovementControllState.MovementDisabled;
+	}
+
+	public void Activate()
+	{
+		m_movementControllState = MovementControllState.MovementEnabled;
 	}
 
 	public void SetMovementInput(Vector2 p_input)
@@ -65,14 +71,14 @@ public class RoverController : MonoBehaviour
 		Vector3 forwardMovement = transform.forward * m_input.y;
 		Vector3 rightMovement = transform.right * m_input.x;
 
-		Vector3 targetHorizontalMovement = Vector3.ClampMagnitude(forwardMovement + rightMovement, 1.0f) *  m_speed;
-		Vector3 targetRotation = new Vector3(0, m_input.x, 0) * m_speed;
+		Vector3 targetHorizontalMovement = Vector3.ClampMagnitude(forwardMovement + rightMovement, 1.0f) *  m_movementSpeed;
+		Vector3 targetRotation = new Vector3(0, m_input.x, 0) * m_movementSpeed;
 
 		m_body.AddForce(targetHorizontalMovement, ForceMode.Force);
 		m_body.AddTorque(targetRotation, ForceMode.Force);
 	}
 
-	private void Rotate()
+	private void Float()
 	{
 		m_averageDistance = 0;
 
@@ -98,6 +104,16 @@ public class RoverController : MonoBehaviour
 		transform.rotation = currentRotation;
 
 		float targetHeight = ((m_targetDistanceFromGround + transform.position.y) / (m_averageDistance)) * m_targetDistanceFromGround;
+
+		if (m_hasFlashlight)
+		{
+			targetHeight = ((m_targetDistanceFromGround + transform.position.y) / (m_averageDistance)) * m_targetDistanceFromGround;
+		}
+		else
+		{
+			targetHeight = ((m_targetDistanceFromGroundDeactivated + transform.position.y) / (m_averageDistance)) * m_targetDistanceFromGroundDeactivated;
+		}
+
 		float currentHeight = transform.position.y * m_heightWeight + targetHeight * (1 - m_heightWeight);
 		transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
 	}

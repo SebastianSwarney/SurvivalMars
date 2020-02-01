@@ -5,6 +5,12 @@ using UnityEngine;
 public class RoverFlashlightHolder : ObjectHolder
 {
 	public Transform m_objectHoldTransform;
+	private RoverController m_rover;
+
+	private void Start()
+	{
+		m_rover = GetComponent<RoverController>();
+	}
 
 	private void FixedUpdate()
 	{
@@ -12,6 +18,18 @@ public class RoverFlashlightHolder : ObjectHolder
 		{
 			HoldingObject();
 		}
+	}
+
+	public override void SelectObject(PickupObject p_newObject)
+	{
+		base.SelectObject(p_newObject);
+		m_rover.m_hasFlashlight = true;
+	}
+
+	public override void DeselectObject()
+	{
+		base.DeselectObject();
+		m_rover.m_hasFlashlight = false;
 	}
 
 	private void OnTriggerEnter(Collider other)

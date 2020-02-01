@@ -13,7 +13,7 @@ public class ObjectHolder : MonoBehaviour
 	[HideInInspector]
 	public bool m_holdingObject;
 
-	public void SelectObject(PickupObject p_newObject)
+	public virtual void SelectObject(PickupObject p_newObject)
 	{
 		if (p_newObject.m_currentHolder != null)
 		{
@@ -29,7 +29,7 @@ public class ObjectHolder : MonoBehaviour
 		m_holdingObject = true;
 	}
 
-	public void DeselectObject()
+	public virtual void DeselectObject()
 	{
 		m_pickupObject.m_rigidbody.useGravity = true;
 		m_pickupObject.m_currentHolder = null;
