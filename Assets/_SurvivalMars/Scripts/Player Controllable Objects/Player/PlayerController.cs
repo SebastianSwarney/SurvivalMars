@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour
 	[Space]
 	#endregion
 
+	public LayerMask m_vehicleMask;
+
 	private Vector2 m_movementInput;
 	private Vector2 m_lookInput;
 
@@ -118,14 +120,38 @@ public class PlayerController : MonoBehaviour
 		CameraRotation();
 	}
 
+	public void OnEnterInputDown()
+	{
+		EnterVehicle();
+	}
+
+	private void EnterVehicle()
+	{
+		RaycastHit hit;
+
+		if (Physics.SphereCast(m_viewCamera.transform.position, 1f, m_viewCamera.transform.forward, out hit, Mathf.Infinity, m_vehicleMask))
+		{
+			RoverController foundObject = hit.collider.GetComponentInParent<RoverController>();
+			PlayerPossesionController.Instance.ControllRover();
+		}
+	}
+
 	public void Deactivate()
 	{
 		m_states.m_movementControllState = MovementControllState.MovementDisabled;
+		m_viewCamera.enabled = false;
+		m_characterController.enabled = false;
 	}
 
 	public void Activate()
 	{
 		m_states.m_movementControllState = MovementControllState.MovementEnabled;
+		m_viewCamera.enabled = true;
+
+		if (m_characterController != null)
+		{
+			m_characterController.enabled = true;
+		}
 	}
 
 	#region Input Code

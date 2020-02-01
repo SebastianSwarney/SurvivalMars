@@ -27,5 +27,10 @@ public class RoverInput : MonoBehaviour
 	{
 		Vector2 movementInput = new Vector2(m_playerInputController.GetAxis("MoveHorizontal"), m_playerInputController.GetAxis("MoveVertical"));
 		m_roverController.SetMovementInput(movementInput);
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			m_roverController.OnPlayerExitInputDown();
+		}
 	}
 }
