@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public enum EnemyState { Wandering, Chase, Scared, Respawn}
+    public enum EnemyState { Wandering, Chase, Scared, Respawn }
 
     public EnemyState m_currentState;
 
@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     #region Detection Radius
     [Header("Detection Variables")]
     public float m_detectionTime;
-    private float m_detectionTimer;
+    public float m_detectionTimer;
     private EnemyDetection m_enemyDetection;
 
     public float m_lostTime;
@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         m_enemyDetection = GetComponentInChildren<EnemyDetection>();
+        m_movementController = GetComponent<EnemyMovement_Base>();
 
     }
     private void Start()
@@ -39,13 +40,18 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
+    private void Update()
+    {
+        CheckStates();
+    }
+
     #region State Machine
     private void CheckStates()
     {
         switch (m_currentState)
         {
             case EnemyState.Wandering:
-                
+
                 m_movementController.IdleMovement();
                 break;
             case EnemyState.Chase:
@@ -56,8 +62,9 @@ public class EnemyController : MonoBehaviour
                 else
                 {
                     m_movementController.MoveToLastKnownPosition();
+                    m_lostCoroutine = StartCoroutine(LostTimer());
                 }
-                
+
                 break;
             case EnemyState.Scared:
                 m_movementController.RunAway();
@@ -69,16 +76,18 @@ public class EnemyController : MonoBehaviour
 
     private void SwitchState(EnemyState p_newState)
     {
+        m_currentState = p_newState;
         switch (p_newState)
         {
             case EnemyState.Wandering:
-                m_enemyDetection.enabled = true;
+                ResetDetectionTime();
+                m_enemyDetection.SetCollidersState(true);
                 break;
             case EnemyState.Chase:
-                m_enemyDetection.enabled = false;
+                m_enemyDetection.SetCollidersState(false);
                 break;
             case EnemyState.Scared:
-                m_enemyDetection.enabled = false;
+                m_enemyDetection.SetCollidersState(false);
                 break;
             case EnemyState.Respawn:
                 m_enemyObject.SetActive(false);
@@ -88,7 +97,7 @@ public class EnemyController : MonoBehaviour
     }
     #endregion
 
-    
+
     #region RespawnTime
     private IEnumerator RespawnTime()
     {
@@ -96,7 +105,7 @@ public class EnemyController : MonoBehaviour
         Respawn();
 
     }
-    
+
     private void Respawn()
     {
         transform.position = m_repsawnPosition.position;
@@ -120,7 +129,7 @@ public class EnemyController : MonoBehaviour
             SwitchState(EnemyState.Chase);
         }
     }
-    
+
     public void ResetDetectionTime()
     {
         m_detectionTimer = 0;
@@ -132,5 +141,5 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(m_lostTime);
         SwitchState(EnemyState.Wandering);
     }
-    
+
 }

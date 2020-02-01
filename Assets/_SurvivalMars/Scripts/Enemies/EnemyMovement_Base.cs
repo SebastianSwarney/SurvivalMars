@@ -7,6 +7,7 @@ public abstract class EnemyMovement_Base : MonoBehaviour
 
     public GameObject m_playerObject;
     private Vector3 m_lastPlayerPostion;
+
     public abstract void IdleMovement();
 
     public abstract void MoveToPlayer();

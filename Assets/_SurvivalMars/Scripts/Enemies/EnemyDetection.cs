@@ -13,15 +13,36 @@ public class EnemyDetection : MonoBehaviour
     private bool m_playerLost;
 
     public float m_chaseDetectionRadius;
+    public LayerMask m_playerDetectionMask;
+    public LayerMask m_nonBlockingTerrain;
 
     [Header("Gizmos")]
     public bool m_debugGizmos;
     public Color m_chaseDetectionColor;
-    public LayerMask m_playerDetectionMask;
+    
+
+    Collider[] m_colliders;
+    private void Awake()
+    {
+        m_colliders = GetComponents<Collider>();
+    }
+
+    public void SetCollidersState(bool p_collide)
+    {
+        foreach (Collider col in m_colliders)
+        {
+            col.enabled = p_collide;
+        }
+    }
+    
     private void OnTriggerStay(Collider other)
     {
-        m_playerInRadiusEvent.Invoke();
-        m_playerLost = false;
+        if (!Physics.Linecast(transform.position, other.transform.position, ~m_nonBlockingTerrain))
+        {
+            m_playerInRadiusEvent.Invoke();
+            m_playerLost = false;
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {
@@ -30,10 +51,13 @@ public class EnemyDetection : MonoBehaviour
 
     public bool PlayerInRadius()
     {
-        RaycastHit hit;
-        if (Physics.SphereCast(transform.position, m_chaseDetectionRadius, transform.forward, out hit, 0, m_playerDetectionMask))
+        Collider[] cols = Physics.OverlapSphere(transform.position, m_chaseDetectionRadius, m_playerDetectionMask);
+        if (cols.Length > 0)
         {
-            return true;
+            if (!Physics.Linecast(transform.position, cols[0].transform.position, ~m_nonBlockingTerrain))
+            {
+                return true;
+            }
         }
         if (!m_playerLost)
         {
