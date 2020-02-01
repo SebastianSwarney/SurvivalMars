@@ -9,6 +9,11 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
         print("Idle");
     }
 
+    public override void MoveToLastKnownPosition()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void MoveToPlayer()
     {
         print("Chase");
