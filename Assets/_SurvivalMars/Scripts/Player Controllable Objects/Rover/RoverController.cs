@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoverController : MonoBehaviour
 {
+	public bool m_hasFlashlight;
+
 	public Transform m_leftMotor;
 	public Transform m_rightMotor;
 
@@ -35,8 +37,17 @@ public class RoverController : MonoBehaviour
 		//ThrusterMovement(m_leftMotor, m_input.x, m_speed);
 		//ThrusterMovement(m_rightMotor, m_input.x, m_speed);
 
-		MoveRover();
-		Rotate();
+		if (m_hasFlashlight)
+		{
+			MoveRover();
+			Rotate();
+
+			m_body.useGravity = false;
+		}
+		else
+		{
+			m_body.useGravity = true;
+		}
 	}
 
 	public void SetMovementInput(Vector2 p_input)
