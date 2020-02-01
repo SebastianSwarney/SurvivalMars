@@ -852,20 +852,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3722660748352128653, guid: 60b39b70273140f4894450357b985e5c,
-        type: 3}
-      propertyPath: m_vehicleMask.m_Bits
-      value: 4096
-      objectReference: {fileID: 0}
     - target: {fileID: 3722660748352128654, guid: 60b39b70273140f4894450357b985e5c,
         type: 3}
       propertyPath: m_Name
       value: PRFB_Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3722660748352128654, guid: 60b39b70273140f4894450357b985e5c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3722660748352128658, guid: 60b39b70273140f4894450357b985e5c,
         type: 3}
