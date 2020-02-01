@@ -9,8 +9,6 @@ public class PlayerControllerEvent : UnityEvent { }
 
 public class PlayerController : MonoBehaviour
 {
-	public bool m_isPlaying;
-
 	public enum MovementControllState { MovementEnabled, MovementDisabled }
 	public enum GravityState { GravityEnabled, GravityDisabled }
 	public enum DamageState { Vulnerable, Invulnerable }
@@ -122,7 +120,10 @@ public class PlayerController : MonoBehaviour
 
 	public void OnEnterInputDown()
 	{
-		EnterVehicle();
+		if (m_states.m_movementControllState == MovementControllState.MovementEnabled)
+		{
+			EnterVehicle();
+		}
 	}
 
 	private void EnterVehicle()

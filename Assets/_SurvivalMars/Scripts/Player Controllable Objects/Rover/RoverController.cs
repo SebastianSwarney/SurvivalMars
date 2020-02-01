@@ -39,7 +39,6 @@ public class RoverController : MonoBehaviour
 	private void Start()
 	{
 		m_body = GetComponentInParent<Rigidbody>();
-		//m_viewCamera = GetComponentInChildren<Camera>();
 	}
 
 	private void FixedUpdate()
@@ -67,15 +66,22 @@ public class RoverController : MonoBehaviour
 		m_movementControllState = MovementControllState.MovementDisabled;
 		m_viewCamera.enabled = false;
 
-		PlayerPossesionController.Instance.m_playerChar.transform.position = CheckExitPos();
 		PlayerPossesionController.Instance.m_playerChar.transform.parent = null;
+	}
+
+	public void Activate()
+	{
+		m_movementControllState = MovementControllState.MovementEnabled;
+		m_viewCamera.enabled = true;
+
+		PlayerPossesionController.Instance.m_playerChar.transform.parent = m_playerHoldPos;
+		PlayerPossesionController.Instance.m_playerChar.transform.position = m_playerHoldPos.position;
 	}
 
 	private Vector3 CheckExitPos()
 	{
 		Vector3 exitPos = Vector3.zero;
 
-		/*
 		RaycastHit hitRight;
 
 		if (Physics.SphereCast(transform.position, 1f, transform.right, out hitRight, m_exitDst, m_groundMask))
@@ -103,19 +109,10 @@ public class RoverController : MonoBehaviour
 		}
 
 		exitPos = transform.position + (transform.up * m_exitDst);
-		*/
 
 		return exitPos;
 	}
 
-	public void Activate()
-	{
-		m_movementControllState = MovementControllState.MovementEnabled;
-		m_viewCamera.enabled = true;
-
-		PlayerPossesionController.Instance.m_playerChar.transform.parent = m_playerHoldPos;
-		PlayerPossesionController.Instance.m_playerChar.transform.position = m_playerHoldPos.position;
-	}
 
 	public void SetMovementInput(Vector2 p_input)
 	{

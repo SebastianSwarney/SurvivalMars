@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 22032243}
   - component: {fileID: 22032242}
   - component: {fileID: 22032241}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 85038177}
   - component: {fileID: 85038176}
   - component: {fileID: 85038175}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 169865964}
   - component: {fileID: 169865963}
   - component: {fileID: 169865962}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Quad (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 1409818012}
   - component: {fileID: 1409818011}
   - component: {fileID: 1409818010}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +740,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 16384
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8600000, guid: 2d0007caee93a3345b422dc3cdd19ab7, type: 2}
   m_TargetDisplay: 0
@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 1434543966}
   - component: {fileID: 1434543965}
   - component: {fileID: 1434543964}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Quad (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -873,7 +873,7 @@ GameObject:
   - component: {fileID: 1632704315}
   - component: {fileID: 1632704314}
   - component: {fileID: 1632704313}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1142,7 +1142,7 @@ GameObject:
   - component: {fileID: 1931442927}
   - component: {fileID: 1931442926}
   - component: {fileID: 1931442925}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1236,7 +1236,7 @@ GameObject:
   - component: {fileID: 2005031656}
   - component: {fileID: 2005031655}
   - component: {fileID: 2005031654}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Quad (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1327,7 +1327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2013296647}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}

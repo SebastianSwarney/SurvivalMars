@@ -9,8 +9,6 @@ public class PlayerPossesionController : MonoBehaviour
 	public PlayerController m_playerChar;
 	public RoverController m_rover;
 
-	private bool change;
-
 	private void Awake()
 	{
 		if (Instance == null)
@@ -28,23 +26,6 @@ public class PlayerPossesionController : MonoBehaviour
 		ControllPlayer();
 	}
 
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.K))
-		{
-			change = !change;
-
-			if (change)
-			{
-				ControllRover();
-			}
-			else
-			{
-				ControllPlayer();
-			}
-		}
-	}
-
 	public void ControllRover()
 	{
 		if (m_rover.m_hasFlashlight)
@@ -56,7 +37,7 @@ public class PlayerPossesionController : MonoBehaviour
 
 	public void ControllPlayer()
 	{
-		m_rover.Deactivate();
 		m_playerChar.Activate();
+		m_rover.Deactivate();
 	}
 }

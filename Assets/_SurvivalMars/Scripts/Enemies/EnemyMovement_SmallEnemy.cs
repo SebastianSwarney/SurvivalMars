@@ -33,6 +33,18 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
         }
     }
 
+   
+    public override void MoveToLastKnownPosition()
+    {
+        NearPosition(m_chaseSpeed, m_brakingDistance, m_stoppingDistance, m_lastPlayerPostion);
+    }
+
+    public override void MoveToPlayer()
+    {
+        NearPosition(m_chaseSpeed, 0, 0, m_playerObject.transform.position);
+    }
+
+
     /// <summary>
     /// Moves the Character accordingly, and brakes depending on how close to the target position
     /// </summary>
@@ -61,24 +73,20 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
             else
             {
                 currentSpeed = (distance / p_stateBrakingDistance) * p_stateSpeed;
+                print("CurrentSpeed");
             }
         }
         Vector3 dir = transform.position - p_target;
         dir = -new Vector3(dir.x, 0, dir.z).normalized;
         RotateToPoint(new Vector3(p_target.x, transform.position.y, p_target.z));
+        if (currentSpeed > 30)
+        {
+            print("Current Speed : " + currentSpeed);
+        }
         m_rb.velocity = new Vector3(transform.forward.x, m_rb.velocity.y, transform.forward.z) * currentSpeed;
         return nearPos;
     }
 
-    public override void MoveToLastKnownPosition()
-    {
-        NearPosition(m_chaseSpeed, m_brakingDistance, m_stoppingDistance, m_lastPlayerPostion);
-    }
-
-    public override void MoveToPlayer()
-    {
-        NearPosition(m_chaseSpeed, 0, 0, m_playerObject.transform.position);
-    }
 
     public override void RotateToPoint(Vector3 p_point)
     {
@@ -90,13 +98,27 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
         Debug.DrawLine(transform.position, transform.position + Vector3.Cross(transform.forward, dirToTarget - transform.forward));
         Debug.DrawLine(transform.position, p_point);
         float rotationSide = Vector3.Dot(transform.right, dirToTarget - transform.forward);
-        print("Rotate Side: " + rotationSide);
 
         if (Vector3.Angle(transform.forward, dirToTarget) > 150)
         {
             rotationSide = 1;
             rotationAmount = 1.5f;
         }
-        transform.Rotate(transform.up, ((rotationAmount > 1 ) ? m_rotateSpeed : rotationAmount * m_rotateSpeed) * Mathf.Sign(rotationSide));
+        transform.Rotate(transform.up, ((rotationAmount > 1 ) ? m_rotateSpeed : rotationAmount * m_rotateSpeed) * Mathf.Sign(rotationSide)); 
+        if (m_rb.velocity.magnitude > 10)
+        {
+            print("RB Vel: " + m_rb.velocity.magnitude);
+        }
+
+    }
+
+    public void GetNewWaypoint()
+    {
+        m_currentWaypoint = m_waypointManager.GetClosestWaypoint(m_sectorIndex, transform.position);
+    }
+
+    public override void StopMovement()
+    {
+        m_rb.velocity = Vector3.zero;
     }
 }

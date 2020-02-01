@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 632321599}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Flashlight Hold Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 632321598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.045, y: -0.762, z: 0.671}
+  m_LocalPosition: {x: 0.87, y: -0.868, z: 1.207}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3722660749560265944}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 3722660748011311185}
   - component: {fileID: 3722660748011311186}
   - component: {fileID: 3722660748011311187}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,8 +136,8 @@ GameObject:
   - component: {fileID: 3722660748352128659}
   - component: {fileID: 3722660748352128652}
   - component: {fileID: 3722660748352128653}
-  - component: {fileID: 1722354037}
-  m_Layer: 0
+  - component: {fileID: 5064005571910514110}
+  m_Layer: 8
   m_Name: PRFB_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,10 @@ MonoBehaviour:
   m_timeToJumpApex: 0.4
   m_graceTime: 0.3
   m_jumpBufferTime: 0.2
---- !u!114 &1722354037
+  m_vehicleMask:
+    serializedVersion: 2
+    m_Bits: 4096
+--- !u!114 &5064005571910514110
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,17 +243,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3722660748352128654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a75513c3c8747824c99e4d1a5d6df6bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 78620a9fd29f33a45bd2be23393ee047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_objectPickupLayers:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 8192
   m_pickupObject: {fileID: 0}
   m_rotateObject: {fileID: 0}
   m_holdingObject: 0
-  m_objectHoldTransform: {fileID: 632321599}
-  m_objectHoldDistance: 5
+  m_flashLightHoldTransform: {fileID: 632321599}
   m_objectFollowSpeed: 0.9
   m_objectRotateSpeed: 0.9
 --- !u!1 &3722660748528416390
@@ -262,7 +264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3722660748528416389}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera Rotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3722660748628986678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +328,7 @@ GameObject:
   - component: {fileID: 3722660749560265944}
   - component: {fileID: 3722660749560265950}
   - component: {fileID: 3722660749560265951}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
