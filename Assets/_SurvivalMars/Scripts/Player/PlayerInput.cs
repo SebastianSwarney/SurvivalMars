@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class PlayerInput : MonoBehaviour
 {
-	/*
 	public int m_playerId;
-	public float m_shortDashInputSpeed;
 
 	private PlayerController m_playerController;
+	private Player m_playerInputController;
 
 	private bool m_lockLooking;
 
 	private void Start()
 	{
 		m_playerController = GetComponent<PlayerController>();
+		m_playerInputController = ReInput.players.GetPlayer(m_playerId);
 	}
 
 	private void Update()
@@ -48,5 +49,4 @@ public class PlayerInput : MonoBehaviour
 			m_playerController.OnJumpInputUp();
 		}
 	}
-	*/
 }
