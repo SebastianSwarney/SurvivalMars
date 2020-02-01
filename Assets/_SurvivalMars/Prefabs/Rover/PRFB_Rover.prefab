@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1052351836}
   - component: {fileID: 1052351838}
   - component: {fileID: 1052351837}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1427178682}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Flashligth Hold Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1477623988}
   - component: {fileID: 1477623989}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Flashlight Hold Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3059934402706069070}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player Hold Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5871531206026051212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9017482071947210231}
@@ -194,7 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482070042378582}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 9017482070105660575}
   - component: {fileID: 9017482070105660573}
   - component: {fileID: 9017482070105660572}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482070178065652}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482070467162046}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +367,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482070929086480}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 9017482070951125949}
   - component: {fileID: 9017482070951125948}
   - component: {fileID: 9017482070951125951}
-  m_Layer: 1
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482070971078648}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,7 +524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482071370042458}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482071411668414}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -586,7 +586,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482071471432354}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482071674546790}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,7 +646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482071746039178}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Thrusters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 9017482071947210225}
   - component: {fileID: 9017482071947210224}
   - component: {fileID: 1246929739}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PRFB_Rover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,6 +753,7 @@ MonoBehaviour:
   m_heightWeight: 0.95
   m_viewCamera: {fileID: 9017482070105660573}
   m_playerHoldPos: {fileID: 3059934402706069070}
+  m_exitDst: 5
 --- !u!54 &9017482071947210224
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -797,7 +798,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9017482072140405810}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
