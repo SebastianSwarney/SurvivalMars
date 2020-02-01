@@ -6,7 +6,7 @@ public abstract class EnemyMovement_Base : MonoBehaviour
 {
 
     public GameObject m_playerObject;
-    private Vector3 m_lastPlayerPostion;
+    public Vector3 m_lastPlayerPostion;
 
     public abstract void IdleMovement();
 
@@ -14,7 +14,7 @@ public abstract class EnemyMovement_Base : MonoBehaviour
 
     public abstract void MoveToLastKnownPosition();
 
-    public abstract void RunAway();
+    public abstract void RotateToPoint(Vector3 p_point);
 
     public void PlayerLost()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public enum EnemyState { Wandering, Chase, Scared, Respawn }
+    public enum EnemyState { Wandering, Chase, Respawn }
 
     public EnemyState m_currentState;
 
@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Chase:
                 if (m_enemyDetection.PlayerInRadius())
                 {
+                    print("Move To Player");
                     m_movementController.MoveToPlayer();
                 }
                 else
@@ -66,9 +67,7 @@ public class EnemyController : MonoBehaviour
                 }
 
                 break;
-            case EnemyState.Scared:
-                m_movementController.RunAway();
-                break;
+
             case EnemyState.Respawn:
                 break;
         }
@@ -84,9 +83,6 @@ public class EnemyController : MonoBehaviour
                 m_enemyDetection.SetCollidersState(true);
                 break;
             case EnemyState.Chase:
-                m_enemyDetection.SetCollidersState(false);
-                break;
-            case EnemyState.Scared:
                 m_enemyDetection.SetCollidersState(false);
                 break;
             case EnemyState.Respawn:
@@ -115,7 +111,7 @@ public class EnemyController : MonoBehaviour
     public void Stunned()
     {
         m_enemyObject.SetActive(false);
-        SwitchState(EnemyState.Scared);
+        SwitchState(EnemyState.Respawn);
     }
     #endregion
 
