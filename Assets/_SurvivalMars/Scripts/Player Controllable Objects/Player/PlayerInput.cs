@@ -9,12 +9,14 @@ public class PlayerInput : MonoBehaviour
 
 	private PlayerController m_playerController;
 	private Player m_playerInputController;
+	private PlayerFlashlightHolder m_playerFlashlightHolder;
 
 	private bool m_lockLooking;
 
 	private void Start()
 	{
 		m_playerController = GetComponent<PlayerController>();
+		m_playerFlashlightHolder = GetComponent<PlayerFlashlightHolder>();
 		m_playerInputController = ReInput.players.GetPlayer(m_playerId);
 	}
 
@@ -37,6 +39,11 @@ public class PlayerInput : MonoBehaviour
 		{
 			Vector2 lookInput = new Vector2(m_playerInputController.GetAxis("LookHorizontal"), m_playerInputController.GetAxis("LookVertical"));
 			m_playerController.SetLookInput(lookInput);
+		}
+
+		if (m_playerInputController.GetButtonDown("FlashLightPickup"))
+		{
+			m_playerFlashlightHolder.OnFlashLightPickupInputDown();
 		}
 
 		if (m_playerInputController.GetButtonDown("Enter"))

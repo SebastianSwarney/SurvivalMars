@@ -9,9 +9,6 @@ public class RoverController : MonoBehaviour
 
 	public bool m_hasFlashlight;
 
-	public Transform m_leftMotor;
-	public Transform m_rightMotor;
-
 	public float m_movementSpeed;
 
 	public Transform[] m_bottomThrusters;
@@ -174,5 +171,13 @@ public class RoverController : MonoBehaviour
 
 		float currentHeight = transform.position.y * m_heightWeight + targetHeight * (1 - m_heightWeight);
 		transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+	}
+
+	private void OnDrawGizmos()
+	{
+		foreach (Transform thruster in m_bottomThrusters)
+		{
+			Debug.DrawRay(thruster.transform.position, Vector3.down * 10, Color.red);
+		}
 	}
 }

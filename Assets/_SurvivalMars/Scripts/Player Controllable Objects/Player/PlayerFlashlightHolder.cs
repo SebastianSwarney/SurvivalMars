@@ -8,38 +8,49 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 	public Transform m_crystalHoldTransform;
 
-	public float m_objectHoldDistance;
 	public float m_objectFollowSpeed;
 	public float m_objectRotateSpeed;
+	public PickupObject m_flashLight;
 
 	private Camera m_viewCam;
-
-	private float m_yPosSmoothVelocity;
-
 	private bool m_hasCrystal;
+
+	private FlashlightController m_flashLightComponent;
 
 	private void Start()
 	{
 		m_viewCam = GetComponentInChildren<Camera>();
+
+		SelectObject(m_flashLight);
+
+		m_flashLightComponent = m_pickupObject.GetComponent<FlashlightController>();
 	}
 
 	private void FixedUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.F))
-		{
-			if (!m_holdingObject)
-			{
-				FindObject();
-			}
-			else
-			{
-				DeselectObject();
-			}
-		}
-
 		if (m_holdingObject)
 		{
 			HoldingObject();
+		}
+	}
+
+	public void OnLightBurstInputDown()
+	{
+		if (m_holdingObject)
+		{
+			m_flashLightComponent.TriggerLightBurst();
+		}
+	}
+
+	public void OnFlashLightPickupInputDown()
+	{
+		if (!m_holdingObject)
+		{
+			FindObject();
+		}
+		else
+		{
+			DeselectObject();
 		}
 	}
 
@@ -54,6 +65,18 @@ public class PlayerFlashlightHolder : ObjectHolder
 	{
 		m_hasCrystal = false;
 		m_pickupObject.gameObject.SetActive(true);
+	}
+
+	public override void SelectObject(PickupObject p_newObject)
+	{
+		base.SelectObject(p_newObject);
+		m_flashLightComponent.ActivateLight();
+	}
+
+	public override void DeselectObject()
+	{
+		base.DeselectObject();
+		m_flashLightComponent.DeactivateLight();
 	}
 
 	private void FindObject()

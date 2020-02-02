@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     #region Respawn Values
     public float m_respawnTime;
     public Transform m_repsawnPosition;
-    public GameObject m_enemyObject;
+    public List<GameObject> m_enemyVisuals;
 
     private EnemyMovement_Base m_movementController;
     #endregion
@@ -101,7 +101,7 @@ public class EnemyController : MonoBehaviour
 
                 break;
             case EnemyState.Died:
-                m_enemyObject.SetActive(false);
+                ChangeVisualState(false);
                 StartCoroutine(RespawnTime());
                 break;
         }
@@ -121,16 +121,11 @@ public class EnemyController : MonoBehaviour
     {
         transform.position = m_repsawnPosition.position;
         transform.rotation = m_repsawnPosition.rotation;
-        m_enemyObject.SetActive(true);
+        ChangeVisualState(true);
         m_enemyEvents.m_respawnEvent.Invoke();
         SwitchState(EnemyState.Wandering);
     }
 
-    public void Stunned()
-    {
-        m_enemyObject.SetActive(false);
-        SwitchState(EnemyState.Respawn);
-    }
     #endregion
 
 
@@ -160,5 +155,13 @@ public class EnemyController : MonoBehaviour
     {
         m_movementController.StopMovement();
         SwitchState(EnemyState.Died);
+    }
+
+    private void ChangeVisualState(bool p_newState)
+    {
+        foreach(GameObject newVisual in m_enemyVisuals)
+        {
+            newVisual.SetActive(p_newState);
+        }
     }
 }
