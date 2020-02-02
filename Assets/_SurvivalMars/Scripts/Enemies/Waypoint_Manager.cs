@@ -7,6 +7,8 @@ public class Waypoint_Manager : MonoBehaviour
 
     public static Waypoint_Manager Instance;
 
+    public GameObject m_playerObject;
+
     private void Awake()
     {
         Instance = this;

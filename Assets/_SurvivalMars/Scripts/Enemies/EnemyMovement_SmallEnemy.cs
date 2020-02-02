@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class EnemyMovement_SmallEnemy : EnemyMovement_Base
 {
-    private Waypoints m_currentWaypoint;
+    [Header("Small Enemy Movement")]
     public int m_sectorIndex;
+    private Waypoints m_currentWaypoint;
     private Waypoint_Manager m_waypointManager;
     public float m_stoppingDistance, m_brakingDistance;
     public float m_chaseSpeed;
@@ -14,7 +15,6 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
     public float m_rotateSpeed;
     public float m_rotationSensitivity = 5;
 
-    private Rigidbody m_rb;
 
     private void Awake()
     {
@@ -23,6 +23,7 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
     private void Start()
     {
         m_waypointManager = Waypoint_Manager.Instance;
+        m_playerObject = Waypoint_Manager.Instance.m_playerObject;
         m_currentWaypoint = m_waypointManager.GetClosestWaypoint(m_sectorIndex, transform.position);
     }
     public override void IdleMovement()
@@ -73,17 +74,14 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
             else
             {
                 currentSpeed = (distance / p_stateBrakingDistance) * p_stateSpeed;
-                print("CurrentSpeed");
             }
         }
         Vector3 dir = transform.position - p_target;
         dir = -new Vector3(dir.x, 0, dir.z).normalized;
         RotateToPoint(new Vector3(p_target.x, transform.position.y, p_target.z));
-        if (currentSpeed > 30)
-        {
-            print("Current Speed : " + currentSpeed);
-        }
         m_rb.velocity = new Vector3(transform.forward.x, m_rb.velocity.y, transform.forward.z) * currentSpeed;
+
+        FloatAboveGround();
         return nearPos;
     }
 

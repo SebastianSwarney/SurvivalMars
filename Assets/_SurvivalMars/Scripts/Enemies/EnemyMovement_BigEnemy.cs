@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement_BigEnemy : EnemyMovement_Base
 {
+    [Header("Big Enemy Movement")]
     public int m_sectorIndex;
     private Waypoint_Manager m_waypointManager;
     public float m_stoppingDistance, m_brakingDistance;
@@ -15,19 +16,8 @@ public class EnemyMovement_BigEnemy : EnemyMovement_Base
     public float m_rotateSpeed;
     public float m_rotationSensitivity = 5;
 
-    [Header("Floating Values")]
-    public LayerMask m_floatingLayer;
-    public float m_targetHeightAboveGround;
-    public float m_maxRaycastDistance;
-    [Tooltip("The amount of influence the height above the ground has.")]
-    public float m_targetHeightWeight;
-    public float m_maxBoost;
-    public float m_heightStoppingDistance;
-    public float m_heightBrakingDistance;
-
     private EnemyEyeMovement m_eyes;
 
-    private Rigidbody m_rb;
 
     private void Awake()
     {
@@ -38,6 +28,7 @@ public class EnemyMovement_BigEnemy : EnemyMovement_Base
     private void Start()
     {
         m_waypointManager = Waypoint_Manager.Instance;
+        m_playerObject = Waypoint_Manager.Instance.m_playerObject;
     }
     public override void IdleMovement()
     {
@@ -107,40 +98,7 @@ public class EnemyMovement_BigEnemy : EnemyMovement_Base
         return nearPos;
     }
 
-    private void FloatAboveGround()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down,out hit, m_maxRaycastDistance, m_floatingLayer))
-        {
-
-            float distance = Vector3.Distance(transform.position, hit.point) - m_targetHeightAboveGround;
-            Distance = distance;
-            float newVelocity = 0;
-
-
-            if (Mathf.Abs(distance) > m_brakingDistance )
-            {
-                newVelocity = -m_maxBoost * Mathf.Sign(distance);
-                print("Max Boost");
-            }
-            else
-            {
-                if (Mathf.Abs(distance) > m_stoppingDistance)
-                {
-                    newVelocity = -m_maxBoost * (Mathf.Abs(distance) / m_brakingDistance) * Mathf.Sign(distance);
-                    print("Adjust Boost");
-                }
-                print("No Boost");
-                
-            }
-
-
-            m_rb.velocity = new Vector3(m_rb.velocity.x, newVelocity, m_rb.velocity.z);
-        }
-
-    }
-    public float Distance;
-
+    
     public override void RotateToPoint(Vector3 p_point)
     {
 
