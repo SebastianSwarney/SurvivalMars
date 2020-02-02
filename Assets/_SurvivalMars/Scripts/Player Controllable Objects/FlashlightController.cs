@@ -19,16 +19,4 @@ public class FlashlightController : MonoBehaviour
 		m_mainLight.enabled = false;
 		m_auraLight.enabled = false;
 	}
-
-	public void TriggerLightBurst()
-	{
-
-	}
-
-	/*
-	public IEnumerator RunLightBrust()
-	{
-		//float t = 0;
-	}
-	*/
 }
