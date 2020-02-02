@@ -16,7 +16,7 @@
 			// and color in _LightColor0
 			Tags {"LightMode" = "ForwardBase"}
 
-			Cull Off
+			//Cull Off
 
 			CGPROGRAM
 			#pragma vertex vert
