@@ -340,6 +340,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &568330854 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4311581811446507881, guid: 4550246e906ac914aba86ed26c9fdea7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4311581811455665655}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24804a476f0120c4d9ec55236e221f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &629739807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -360,7 +372,7 @@ PrefabInstance:
     - target: {fileID: 9017482071947210231, guid: 8c138a01bfd6acb4c906f357b038b160,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.1
+      value: 12.11
       objectReference: {fileID: 0}
     - target: {fileID: 9017482071947210231, guid: 8c138a01bfd6acb4c906f357b038b160,
         type: 3}
@@ -900,10 +912,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1536538342, guid: 60b39b70273140f4894450357b985e5c, type: 3}
-      propertyPath: m_objectPickupLayers.m_Bits
-      value: 32768
-      objectReference: {fileID: 0}
+    - target: {fileID: 3534394372995623017, guid: 60b39b70273140f4894450357b985e5c,
+        type: 3}
+      propertyPath: m_flashLight
+      value: 
+      objectReference: {fileID: 568330854}
     - target: {fileID: 3722660748352128654, guid: 60b39b70273140f4894450357b985e5c,
         type: 3}
       propertyPath: m_Name
