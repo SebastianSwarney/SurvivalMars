@@ -21,9 +21,8 @@ public class PlayerFlashlightHolder : ObjectHolder
 	{
 		m_viewCam = GetComponentInChildren<Camera>();
 
+		m_flashLightComponent = m_flashLight.GetComponent<FlashlightController>();
 		SelectObject(m_flashLight);
-
-		m_flashLightComponent = m_pickupObject.GetComponent<FlashlightController>();
 	}
 
 	private void FixedUpdate()
