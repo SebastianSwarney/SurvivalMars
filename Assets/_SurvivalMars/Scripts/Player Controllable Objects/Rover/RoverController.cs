@@ -33,6 +33,8 @@ public class RoverController : MonoBehaviour
 
 	public float m_exitDst;
 
+	public GameObject[] m_activationLights;
+
 	private void Start()
 	{
 		m_body = GetComponentInParent<Rigidbody>();
@@ -43,6 +45,21 @@ public class RoverController : MonoBehaviour
 		if (m_movementControllState == MovementControllState.MovementEnabled)
 		{
 			MoveRover();
+		}
+
+		if (m_hasFlashlight)
+		{
+			foreach (GameObject light in m_activationLights)
+			{
+				light.SetActive(true);
+			}
+		}
+		else
+		{
+			foreach (GameObject light in m_activationLights)
+			{
+				light.SetActive(false);
+			}
 		}
 
 		Float();
