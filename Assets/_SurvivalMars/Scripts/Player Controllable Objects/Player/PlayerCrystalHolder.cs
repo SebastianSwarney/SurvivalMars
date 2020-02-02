@@ -11,9 +11,12 @@ public class PlayerCrystalHolder : ObjectHolder
 
 	private Camera m_viewCam;
 
+	private PlayerFlashlightHolder m_flashLight;
+
 	private void Start()
 	{
 		m_viewCam = GetComponentInChildren<Camera>();
+		m_flashLight = GetComponent<PlayerFlashlightHolder>();
 	}
 
 	private void FixedUpdate()
@@ -36,6 +39,18 @@ public class PlayerCrystalHolder : ObjectHolder
 		}
 	}
 
+	public override void SelectObject(PickupObject p_newObject)
+	{
+		base.SelectObject(p_newObject);
+		m_flashLight.OnGetCrystal();
+	}
+
+	public override void DeselectObject()
+	{
+		base.DeselectObject();
+		m_flashLight.OnDropCrystal();
+	}
+
 	private void FindObject()
 	{
 		RaycastHit hit;
@@ -51,7 +66,6 @@ public class PlayerCrystalHolder : ObjectHolder
 	private void HoldingObject()
 	{
 		Vector3 targetPos = Vector3.Lerp(m_pickupObject.transform.position, m_objectHoldTransform.position, m_objectFollowSpeed);
-
 		PhysicsSeekTo(m_pickupObject.m_rigidbody, targetPos);
 
 		Quaternion targetRot = Quaternion.Slerp(m_pickupObject.transform.rotation, m_objectHoldTransform.rotation, m_objectRotateSpeed);

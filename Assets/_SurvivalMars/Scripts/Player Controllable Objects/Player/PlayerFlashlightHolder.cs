@@ -6,6 +6,8 @@ public class PlayerFlashlightHolder : ObjectHolder
 {
 	public Transform m_objectHoldTransform;
 
+	public Transform m_crystalHoldTransform;
+
 	public float m_objectHoldDistance;
 	public float m_objectFollowSpeed;
 	public float m_objectRotateSpeed;
@@ -13,6 +15,8 @@ public class PlayerFlashlightHolder : ObjectHolder
 	private Camera m_viewCam;
 
 	private float m_yPosSmoothVelocity;
+
+	private bool m_hasCrystal;
 
 	private void Start()
 	{
@@ -39,6 +43,19 @@ public class PlayerFlashlightHolder : ObjectHolder
 		}
 	}
 
+	public void OnGetCrystal()
+	{
+		m_hasCrystal = true;
+
+		m_pickupObject.gameObject.SetActive(false);
+	}
+
+	public void OnDropCrystal()
+	{
+		m_hasCrystal = false;
+		m_pickupObject.gameObject.SetActive(true);
+	}
+
 	private void FindObject()
 	{
 		RaycastHit hit;
@@ -53,11 +70,21 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 	private void HoldingObject()
 	{
-		Vector3 targetPos = Vector3.Lerp(m_pickupObject.transform.position, m_objectHoldTransform.position, m_objectFollowSpeed);
+		if (!m_hasCrystal)
+		{
+			Vector3 targetPos = Vector3.Lerp(m_pickupObject.transform.position, m_objectHoldTransform.position, m_objectFollowSpeed);
+			PhysicsSeekTo(m_pickupObject.m_rigidbody, targetPos);
 
-		PhysicsSeekTo(m_pickupObject.m_rigidbody, targetPos);
+			Quaternion targetRot = Quaternion.Slerp(m_pickupObject.transform.rotation, m_objectHoldTransform.rotation, m_objectRotateSpeed);
+			PhysicsRotateTo(m_pickupObject.m_rigidbody, targetRot);
+		}
+		else
+		{
+			Vector3 targetPos = Vector3.Lerp(m_pickupObject.transform.position, m_crystalHoldTransform.position, m_objectFollowSpeed);
+			PhysicsSeekTo(m_pickupObject.m_rigidbody, targetPos);
 
-		Quaternion targetRot = Quaternion.Slerp(m_pickupObject.transform.rotation, m_objectHoldTransform.rotation, m_objectRotateSpeed);
-		PhysicsRotateTo(m_pickupObject.m_rigidbody, targetRot);
+			Quaternion targetRot = Quaternion.Slerp(m_pickupObject.transform.rotation, m_crystalHoldTransform.rotation, m_objectRotateSpeed);
+			PhysicsRotateTo(m_pickupObject.m_rigidbody, targetRot);
+		}
 	}
 }
