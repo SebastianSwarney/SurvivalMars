@@ -19,7 +19,6 @@ public class RoverController : MonoBehaviour
 	public float m_targetDistanceFromGroundDeactivated;
 
 	public float m_rotationAdjustSpeed;
-	public float m_roverHeightAdjustSpeed;
 	public float m_heightWeight;
 
 
@@ -34,6 +33,10 @@ public class RoverController : MonoBehaviour
 	public float m_exitDst;
 
 	public GameObject[] m_activationLights;
+
+	public GameObject[] m_redLights;
+
+	private float m_lastActivationTime;
 
 	private void Start()
 	{
@@ -53,12 +56,22 @@ public class RoverController : MonoBehaviour
 			{
 				light.SetActive(true);
 			}
+
+			foreach (GameObject light in m_redLights)
+			{
+				light.SetActive(false);
+			}
 		}
 		else
 		{
 			foreach (GameObject light in m_activationLights)
 			{
 				light.SetActive(false);
+			}
+
+			foreach (GameObject light in m_redLights)
+			{
+				light.SetActive(true);
 			}
 		}
 
@@ -67,11 +80,15 @@ public class RoverController : MonoBehaviour
 
 	public void OnPlayerExitInputDown()
 	{
-		OnPlayerExit();
+		if (Time.time > m_lastActivationTime + 0.1f)
+		{
+			OnPlayerExit();
+		}
 	}
 
 	private void OnPlayerExit()
 	{
+		PlayerPossesionController.Instance.m_playerChar.transform.position = CheckExitPos();
 		PlayerPossesionController.Instance.ControllPlayer();
 	}
 
@@ -90,6 +107,8 @@ public class RoverController : MonoBehaviour
 
 		PlayerPossesionController.Instance.m_playerChar.transform.parent = m_playerHoldPos;
 		PlayerPossesionController.Instance.m_playerChar.transform.position = m_playerHoldPos.position;
+
+		m_lastActivationTime = Time.time;
 	}
 
 	private Vector3 CheckExitPos()
@@ -98,11 +117,7 @@ public class RoverController : MonoBehaviour
 
 		RaycastHit hitRight;
 
-		if (Physics.SphereCast(transform.position, 1f, transform.right, out hitRight, m_exitDst, m_groundMask))
-		{
-
-		}
-		else
+		if (!Physics.SphereCast(transform.position, 1f, transform.right, out hitRight, m_exitDst, m_groundMask))
 		{
 			exitPos = transform.position + (transform.right * m_exitDst);
 
@@ -111,11 +126,7 @@ public class RoverController : MonoBehaviour
 
 		RaycastHit hitLeft;
 
-		if (Physics.SphereCast(transform.position, 1f, -transform.right, out hitLeft, m_exitDst, m_groundMask))
-		{
-
-		}
-		else
+		if (!Physics.SphereCast(transform.position, 1f, -transform.right, out hitLeft, m_exitDst, m_groundMask))
 		{
 			exitPos = transform.position + (-transform.right * m_exitDst);
 
@@ -194,7 +205,7 @@ public class RoverController : MonoBehaviour
 	{
 		foreach (Transform thruster in m_bottomThrusters)
 		{
-			Debug.DrawRay(thruster.transform.position, Vector3.down * 10, Color.red);
+			Debug.DrawRay(thruster.transform.position, -thruster.up * 10, Color.red);
 		}
 	}
 }

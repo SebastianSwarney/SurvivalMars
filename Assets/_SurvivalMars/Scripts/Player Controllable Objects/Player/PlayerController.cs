@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
 
 	private bool IsGrounded()
 	{
-		if (m_characterController.collisionFlags == CollisionFlags.Below)
+		if (m_characterController.isGrounded)
 		{
 			return true;
 		}
@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour
 
 			if (Physics.Raycast(bottom, Vector3.down, out hit))
 			{
-				m_characterController.Move(new Vector3(0, -(hit.distance), 0));
+				//m_characterController.Move(new Vector3(0, -(hit.distance), 0));
 			}
 		}
 

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 105814719}
   - component: {fileID: 105814722}
   - component: {fileID: 105814721}
-  - component: {fileID: 105814720}
   m_Layer: 14
   m_Name: Quad (1)
   m_TagString: Untagged
@@ -80,20 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &105814720
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105814718}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &134219896
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +90,6 @@ GameObject:
   - component: {fileID: 134219897}
   - component: {fileID: 134219900}
   - component: {fileID: 134219899}
-  - component: {fileID: 134219898}
   m_Layer: 14
   m_Name: Quad (3)
   m_TagString: Untagged
@@ -174,20 +158,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &134219898
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134219896}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &548299160
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +169,6 @@ GameObject:
   - component: {fileID: 548299161}
   - component: {fileID: 548299164}
   - component: {fileID: 548299163}
-  - component: {fileID: 548299162}
   m_Layer: 14
   m_Name: Quad
   m_TagString: Untagged
@@ -268,20 +237,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &548299162
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548299160}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &632321598
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +362,6 @@ GameObject:
   - component: {fileID: 884816244}
   - component: {fileID: 884816247}
   - component: {fileID: 884816246}
-  - component: {fileID: 884816245}
   m_Layer: 14
   m_Name: Quad (2)
   m_TagString: Untagged
@@ -476,20 +430,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &884816245
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884816243}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1481335834
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +471,6 @@ GameObject:
   - component: {fileID: 1841046717}
   - component: {fileID: 1841046720}
   - component: {fileID: 1841046719}
-  - component: {fileID: 1841046718}
   m_Layer: 14
   m_Name: Quad (4)
   m_TagString: Untagged
@@ -600,20 +539,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1841046718
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841046716}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1960998710
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,9 +803,9 @@ MonoBehaviour:
   m_baseMovementSpeed: 10
   m_accelerationTime: 0.1
   m_velocity: {x: 0, y: 0, z: 0}
-  m_maxJumpHeight: 4
+  m_maxJumpHeight: 6
   m_minJumpHeight: 1
-  m_timeToJumpApex: 0.4
+  m_timeToJumpApex: 1
   m_graceTime: 0.3
   m_jumpBufferTime: 0.2
   m_vehicleMask:

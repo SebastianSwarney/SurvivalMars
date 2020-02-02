@@ -9,7 +9,7 @@ public class PickupObject : MonoBehaviour
 	[HideInInspector]
 	public Rigidbody m_rigidbody;
 
-	private void Start()
+	private void Awake()
 	{
 		m_rigidbody = GetComponent<Rigidbody>();
 	}
