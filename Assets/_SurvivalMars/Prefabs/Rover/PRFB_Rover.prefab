@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 9017482071947210225}
   - component: {fileID: 9017482071947210224}
   - component: {fileID: 1246929739}
+  - component: {fileID: 3938621525750975327}
   m_Layer: 12
   m_Name: PRFB_Rover
   m_TagString: Untagged
@@ -723,6 +724,26 @@ MonoBehaviour:
   m_rotateObject: {fileID: 0}
   m_holdingObject: 0
   m_objectHoldTransform: {fileID: 1427178682}
+--- !u!114 &3938621525750975327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9017482071947210227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ee81a341e28ac47968b14566f2542f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectPickupLayers:
+    serializedVersion: 2
+    m_Bits: 32768
+  m_pickupObject: {fileID: 0}
+  m_rotateObject: {fileID: 0}
+  m_holdingObject: 0
+  m_crystalAmount: 0
+  m_objectHoldTransform: {fileID: 0}
 --- !u!1 &9017482072140405965
 GameObject:
   m_ObjectHideFlags: 0
