@@ -1,4 +1,4 @@
-﻿Shader "Hidden/RadarPostFX"
+﻿Shader "Hidden/ScreenPostFX"
 {
 	Properties
 	{
@@ -49,7 +49,7 @@
 				const int n = chunk.x + chunk.y * chunkCount;
 				float2 uv = i.uv;
 				const int t = int(_Time.y * 20);
-				if (t % 3 + t % 5 + t % 7 < 2)
+				if (t % 11 + t % 5 + t % 7 < 2)
 				{
 					const float2 relativeUv = i.uv - float2(chunk) / fChunkCount;
 					const float2 seed = float2(sin(101.0 * n), sin(43.0 * n));
@@ -58,7 +58,8 @@
 				}
 				uv.x *= 1.0 + .02 * float(frac(_Time.y / 10) < float(n) / fChunkCount / fChunkCount);
 				fixed4 raw = tex2D(_MainTex, uv);
-				fixed4 col = (raw.x + raw.y + raw.z > 0) ? fixed4(0.0, 1.0, 0.0, 1.0) : fixed4(0.1, 0.15, 0.1, 1.0);
+				float brightness = max(raw.x, max(raw.y, raw.z));
+				fixed4 col = fixed4(0.1, 0.15 + 0.85 * brightness, 0.1, 1.0);
 				return col;
 			}
 			ENDCG
