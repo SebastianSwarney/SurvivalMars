@@ -13,10 +13,14 @@ public class EnemyController : MonoBehaviour
 
     #region Respawn Values
     public float m_respawnTime;
+    public float m_spawnParticleTime;
+
     public Transform m_repsawnPosition;
     public List<GameObject> m_enemyVisuals;
 
     private EnemyMovement_Base m_movementController;
+    public List<Transform> m_moveToRespawn;
+    public Collider m_killCollider;
     #endregion
 
 
@@ -48,6 +52,7 @@ public class EnemyController : MonoBehaviour
         public EnemyEvent m_playerSpottedEvent;
         public EnemyEvent m_playerLostEvent;
         public EnemyEvent m_respawnEvent;
+        public EnemyEvent m_startRespawnParticle;
         public EnemyEvent m_diedEvent;
     }
 
@@ -101,6 +106,7 @@ public class EnemyController : MonoBehaviour
 
                 break;
             case EnemyState.Died:
+                m_killCollider.enabled = false;
                 ChangeVisualState(false);
                 StartCoroutine(RespawnTime());
                 break;
@@ -112,16 +118,31 @@ public class EnemyController : MonoBehaviour
     #region RespawnTime
     private IEnumerator RespawnTime()
     {
-        yield return new WaitForSeconds(m_respawnTime);
-        Respawn();
+        float time = 0;
+        bool spawnParticle = true;
+        while (time < m_respawnTime)
+        {
+            if (spawnParticle)
+            {
+                if (time >= m_spawnParticleTime)
+                {
+                    spawnParticle = false;
+                    m_enemyEvents.m_startRespawnParticle.Invoke();
+                }
 
+            }
+            yield return null;
+            time += Time.deltaTime;
+        }
+
+        Respawn();
     }
 
     private void Respawn()
     {
-        transform.position = m_repsawnPosition.position;
-        transform.rotation = m_repsawnPosition.rotation;
+
         ChangeVisualState(true);
+        m_killCollider.enabled = true;
         m_enemyEvents.m_respawnEvent.Invoke();
         SwitchState(EnemyState.Wandering);
     }
@@ -154,6 +175,13 @@ public class EnemyController : MonoBehaviour
     public void KillMe()
     {
         m_movementController.StopMovement();
+        m_enemyEvents.m_diedEvent.Invoke();
+        transform.position = m_repsawnPosition.position;
+        foreach (Transform newHand in m_moveToRespawn)
+        {
+            newHand.transform.position = m_repsawnPosition.position;
+        }
+        transform.rotation = m_repsawnPosition.rotation;
         SwitchState(EnemyState.Died);
     }
 
