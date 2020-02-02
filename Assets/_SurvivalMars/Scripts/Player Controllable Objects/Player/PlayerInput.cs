@@ -41,6 +41,11 @@ public class PlayerInput : MonoBehaviour
 			m_playerController.SetLookInput(lookInput);
 		}
 
+		if (m_playerInputController.GetButtonDown("FlashBurst"))
+		{
+			m_playerFlashlightHolder.OnLightBurstInputDown();
+		}
+
 		if (m_playerInputController.GetButtonDown("FlashLightPickup"))
 		{
 			m_playerFlashlightHolder.OnFlashLightPickupInputDown();

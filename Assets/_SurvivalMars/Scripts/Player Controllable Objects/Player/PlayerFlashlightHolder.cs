@@ -12,10 +12,22 @@ public class PlayerFlashlightHolder : ObjectHolder
 	public float m_objectRotateSpeed;
 	public PickupObject m_flashLight;
 
+	public float m_flashBurstTime;
+	public float m_flashBurstAngle;
+	public float m_flashBurstIntensity;
+	public AnimationCurve m_flashBurstCurve;
+	public LayerMask m_enemyMask;
+	public float m_flashBurstCastRadius;
+	public float m_flashBurstCastDst;
+
+	public float m_flashLightRechargeTime;
+
 	private Camera m_viewCam;
 	private bool m_hasCrystal;
 
 	private FlashlightController m_flashLightComponent;
+
+	private bool m_canUseFlashlight = true;
 
 	private void Start()
 	{
@@ -37,7 +49,12 @@ public class PlayerFlashlightHolder : ObjectHolder
 	{
 		if (m_holdingObject)
 		{
-			m_flashLightComponent.TriggerLightBurst();
+			//m_flashLightComponent.TriggerLightBurst();
+
+			if (m_canUseFlashlight)
+			{
+				StartCoroutine(RunFlashBurst(m_flashLightComponent.m_mainLight));
+			}
 		}
 	}
 
@@ -69,6 +86,74 @@ public class PlayerFlashlightHolder : ObjectHolder
 	public override void SelectObject(PickupObject p_newObject)
 	{
 		base.SelectObject(p_newObject);
+		m_flashLightComponent.ActivateLight();
+	}
+
+	private IEnumerator RunFlashBurst(Light p_targetLight)
+	{
+		m_canUseFlashlight = false;
+
+		float t = 0;
+
+		float startAngle = p_targetLight.spotAngle;
+		float startIntesity = p_targetLight.intensity;
+
+		while (t < m_flashBurstTime)
+		{
+			t += Time.deltaTime;
+
+			float progress = m_flashBurstCurve.Evaluate(t / m_flashBurstTime);
+
+			float targetAngle = Mathf.Lerp(startAngle, m_flashBurstAngle, progress);
+			p_targetLight.spotAngle = targetAngle;
+
+			float targetIntestity = Mathf.Lerp(startIntesity, m_flashBurstIntensity, progress);
+			p_targetLight.intensity = targetIntestity;
+
+			yield return null;
+		}
+
+		RaycastHit[] hits = Physics.SphereCastAll(m_viewCam.transform.position, m_flashBurstCastRadius, m_viewCam.transform.forward, m_flashBurstCastDst, m_enemyMask);
+
+		foreach (RaycastHit enemy in hits)
+		{
+			enemy.transform.GetComponent<EnemyController>().KillMe();
+		}
+
+		p_targetLight.spotAngle = startAngle;
+		p_targetLight.intensity = startIntesity;
+
+		m_flashLightComponent.DeactivateLight();
+
+		StartCoroutine(FlashlightRecharge());
+	}
+
+	private IEnumerator FlashlightRecharge()
+	{
+		float t = 0;
+
+		while (t < m_flashLightRechargeTime)
+		{
+			t += Time.deltaTime;
+
+			float flashValue = Mathf.Sin(Mathf.Pow(t, 3));
+
+			bool flashlightOn = flashValue < -0.5f;
+
+			if (flashlightOn)
+			{
+				m_flashLightComponent.ActivateLight();
+			}
+			else
+			{
+				m_flashLightComponent.DeactivateLight();
+			}
+
+			yield return null;
+		}
+
+		m_canUseFlashlight = true;
+
 		m_flashLightComponent.ActivateLight();
 	}
 
