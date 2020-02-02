@@ -21,8 +21,10 @@ public class FlashlightController : MonoBehaviour
 
 	}
 
+	/*
 	public IEnumerator RunLightBrust()
 	{
-		float t = 0;
+		//float t = 0;
 	}
+	*/
 }
