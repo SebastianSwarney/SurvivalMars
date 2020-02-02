@@ -25,18 +25,23 @@ public class EnemyMovement_BigEnemy : EnemyMovement_Base
     public float m_heightStoppingDistance;
     public float m_heightBrakingDistance;
 
+    private EnemyEyeMovement m_eyes;
+
     private Rigidbody m_rb;
 
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
+        m_eyes = GetComponent<EnemyEyeMovement>();
     }
+
     private void Start()
     {
         m_waypointManager = Waypoint_Manager.Instance;
     }
     public override void IdleMovement()
     {
+        m_eyes.MoveEyes(transform.position + transform.forward);
         if (NearPosition(m_idleSpeed, m_brakingDistance, m_stoppingDistance, new Vector3(m_targetPosition.x, transform.position.y, m_targetPosition.z)))
         {
             m_targetPosition = m_waypointManager.GiveNewPointInRadius(m_sectorIndex);
@@ -46,12 +51,14 @@ public class EnemyMovement_BigEnemy : EnemyMovement_Base
     
     public override void MoveToLastKnownPosition()
     {
+        m_eyes.MoveEyes(m_lastPlayerPostion);
         NearPosition(m_chaseSpeed, m_brakingDistance, m_stoppingDistance, new Vector3(m_lastPlayerPostion.x, transform.position.y, m_lastPlayerPostion.z));
     }
 
     public override void MoveToPlayer()
     {
         NearPosition(m_chaseSpeed, 0, 0, new Vector3(m_playerObject.transform.position.x, transform.position.y, m_playerObject.transform.position.z));
+        m_eyes.MoveEyes(m_playerObject.transform.position);
     }
 
 
@@ -84,7 +91,6 @@ public class EnemyMovement_BigEnemy : EnemyMovement_Base
             else
             {
                 currentSpeed = (distance / p_stateBrakingDistance) * p_stateSpeed;
-                print("CurrentSpeed");
             }
         }
         Vector3 dir = transform.position - p_target;
