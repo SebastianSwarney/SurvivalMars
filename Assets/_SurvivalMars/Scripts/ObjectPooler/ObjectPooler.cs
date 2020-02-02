@@ -142,7 +142,6 @@ public class ObjectPooler : MonoBehaviour
     {
         if (!objectPool.ContainsKey(pooledObject.name))
         {
-            print("Create New Pool: " + pooledObject.name);
             CreateNewPool(pooledObject);
         }
         objectPool[pooledObject.name].Enqueue(pooledObject);
