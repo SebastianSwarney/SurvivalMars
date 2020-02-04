@@ -13,11 +13,15 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 	public float m_objectFollowSpeed;
 	public float m_objectRotateSpeed;
-	public PickupObject m_flashLight;
+
+	//private PickupObject m_flashLight;
 
 	public float m_flashBurstTime;
+
 	public float m_flashBurstAngle;
 	public float m_flashBurstIntensity;
+	public float m_flashBurstRange;
+
 	public AnimationCurve m_flashBurstCurve;
 	public LayerMask m_enemyMask;
 	public float m_flashBurstCastRadius;
@@ -38,8 +42,9 @@ public class PlayerFlashlightHolder : ObjectHolder
 	{
 		m_viewCam = GetComponentInChildren<Camera>();
 
-		m_flashLightComponent = m_flashLight.GetComponent<FlashlightController>();
-		SelectObject(m_flashLight);
+		m_flashLightComponent = FindObjectOfType<FlashlightController>();
+		SelectObject(m_flashLightComponent.GetComponent<PickupObject>());
+
 	}
 
 	private void FixedUpdate()
@@ -124,6 +129,7 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 		float startAngle = p_targetLight.spotAngle;
 		float startIntesity = p_targetLight.intensity;
+		float startRange = p_targetLight.range;
 
 		while (t < m_flashBurstTime)
 		{
@@ -137,10 +143,13 @@ public class PlayerFlashlightHolder : ObjectHolder
 			float targetIntestity = Mathf.Lerp(startIntesity, m_flashBurstIntensity, progress);
 			p_targetLight.intensity = targetIntestity;
 
+			float targetRange = Mathf.Lerp(startRange, m_flashBurstRange, progress);
+			p_targetLight.range = targetRange;
+
 			yield return null;
 		}
 
-		RaycastHit[] hits = Physics.SphereCastAll(m_viewCam.transform.position, m_flashBurstCastRadius, m_viewCam.transform.forward, m_flashBurstCastDst, m_enemyMask);
+		RaycastHit[] hits = Physics.SphereCastAll(m_viewCam.transform.position, m_flashBurstAngle, m_viewCam.transform.forward, m_flashBurstRange, m_enemyMask);
 
 		foreach (RaycastHit enemy in hits)
 		{
@@ -149,9 +158,9 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 		p_targetLight.spotAngle = startAngle;
 		p_targetLight.intensity = startIntesity;
+		p_targetLight.range = startRange;
 
 		m_onFlashLightBurstEvent.Invoke();
-
 		m_flashLightComponent.DeactivateLight();
 
 		StartCoroutine(FlashlightRecharge());
