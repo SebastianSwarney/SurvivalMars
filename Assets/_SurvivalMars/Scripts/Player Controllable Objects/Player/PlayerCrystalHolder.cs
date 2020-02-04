@@ -21,21 +21,21 @@ public class PlayerCrystalHolder : ObjectHolder
 
 	private void FixedUpdate()
 	{
-		if (Input.GetMouseButtonDown(0))
-		{
-			if (!m_holdingObject)
-			{
-				FindObject();
-			}
-			else
-			{
-				DeselectObject();
-			}
-		}
-
 		if (m_holdingObject)
 		{
 			HoldingObject();
+		}
+	}
+
+	public void OnPickupCrystalInputDown()
+	{
+		if (!m_holdingObject)
+		{
+			FindObject();
+		}
+		else
+		{
+			DeselectObject();
 		}
 	}
 
@@ -43,10 +43,19 @@ public class PlayerCrystalHolder : ObjectHolder
 	{
 		base.SelectObject(p_newObject);
 		m_flashLight.OnGetCrystal();
+
+		m_pickupObject.transform.parent = m_objectHoldTransform;
+		m_pickupObject.transform.position = m_objectHoldTransform.position;
+		m_pickupObject.transform.rotation = m_objectHoldTransform.rotation;
+		m_pickupObject.m_rigidbody.isKinematic = true;
+
 	}
 
 	public override void DeselectObject()
 	{
+		m_pickupObject.transform.parent = null;
+		m_pickupObject.m_rigidbody.isKinematic = false;
+
 		base.DeselectObject();
 		m_flashLight.OnDropCrystal();
 	}
@@ -65,10 +74,12 @@ public class PlayerCrystalHolder : ObjectHolder
 
 	private void HoldingObject()
 	{
+		/*
 		Vector3 targetPos = Vector3.Lerp(m_pickupObject.transform.position, m_objectHoldTransform.position, m_objectFollowSpeed);
 		PhysicsSeekTo(m_pickupObject.m_rigidbody, targetPos);
 
 		Quaternion targetRot = Quaternion.Slerp(m_pickupObject.transform.rotation, m_objectHoldTransform.rotation, m_objectRotateSpeed);
 		PhysicsRotateTo(m_pickupObject.m_rigidbody, targetRot);
+		*/
 	}
 }

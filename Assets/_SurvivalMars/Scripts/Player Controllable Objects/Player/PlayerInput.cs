@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
 	private PlayerController m_playerController;
 	private Player m_playerInputController;
 	private PlayerFlashlightHolder m_playerFlashlightHolder;
+	private PlayerCrystalHolder m_playerCrystalHolder;
 
 	private bool m_lockLooking;
 
@@ -17,6 +18,7 @@ public class PlayerInput : MonoBehaviour
 	{
 		m_playerController = GetComponent<PlayerController>();
 		m_playerFlashlightHolder = GetComponent<PlayerFlashlightHolder>();
+		m_playerCrystalHolder = GetComponent<PlayerCrystalHolder>();
 		m_playerInputController = ReInput.players.GetPlayer(m_playerId);
 	}
 
@@ -39,6 +41,11 @@ public class PlayerInput : MonoBehaviour
 		{
 			Vector2 lookInput = new Vector2(m_playerInputController.GetAxis("LookHorizontal"), m_playerInputController.GetAxis("LookVertical"));
 			m_playerController.SetLookInput(lookInput);
+		}
+
+		if (m_playerInputController.GetButtonDown("PickupCrystal"))
+		{
+			m_playerCrystalHolder.OnPickupCrystalInputDown();
 		}
 
 		if (m_playerInputController.GetButtonDown("FlashBurst"))

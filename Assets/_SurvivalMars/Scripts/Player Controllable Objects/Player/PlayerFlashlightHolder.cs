@@ -29,6 +29,8 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 	private bool m_canUseFlashlight = true;
 
+	private Vector3 m_followSmoothing;
+
 	private void Start()
 	{
 		m_viewCam = GetComponentInChildren<Camera>();
@@ -74,20 +76,42 @@ public class PlayerFlashlightHolder : ObjectHolder
 	{
 		m_hasCrystal = true;
 
-		m_pickupObject.gameObject.SetActive(false);
+		if (m_pickupObject != null)
+		{
+			m_pickupObject.gameObject.SetActive(false);
+		}
 	}
 
 	public void OnDropCrystal()
 	{
 		m_hasCrystal = false;
-		m_pickupObject.gameObject.SetActive(true);
+
+		if (m_pickupObject != null)
+		{
+			m_pickupObject.gameObject.SetActive(true);
+		}
 	}
 
 	public override void SelectObject(PickupObject p_newObject)
 	{
 		base.SelectObject(p_newObject);
 		m_flashLightComponent.ActivateLight();
+
+		m_pickupObject.transform.parent = m_objectHoldTransform;
+		m_pickupObject.transform.position = m_objectHoldTransform.position;
+		m_pickupObject.transform.rotation = m_objectHoldTransform.rotation;
+		m_pickupObject.m_rigidbody.isKinematic = true;
 	}
+
+	public override void DeselectObject()
+	{
+		m_pickupObject.transform.parent = null;
+		m_pickupObject.m_rigidbody.isKinematic = false;
+
+		base.DeselectObject();
+		m_flashLightComponent.DeactivateLight();
+	}
+
 
 	private IEnumerator RunFlashBurst(Light p_targetLight)
 	{
@@ -157,12 +181,6 @@ public class PlayerFlashlightHolder : ObjectHolder
 		m_flashLightComponent.ActivateLight();
 	}
 
-	public override void DeselectObject()
-	{
-		base.DeselectObject();
-		m_flashLightComponent.DeactivateLight();
-	}
-
 	private void FindObject()
 	{
 		RaycastHit hit;
@@ -177,6 +195,7 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 	private void HoldingObject()
 	{
+		/*
 		if (!m_hasCrystal)
 		{
 			Vector3 targetPos = Vector3.Lerp(m_pickupObject.transform.position, m_objectHoldTransform.position, m_objectFollowSpeed);
@@ -193,5 +212,6 @@ public class PlayerFlashlightHolder : ObjectHolder
 			Quaternion targetRot = Quaternion.Slerp(m_pickupObject.transform.rotation, m_crystalHoldTransform.rotation, m_objectRotateSpeed);
 			PhysicsRotateTo(m_pickupObject.m_rigidbody, targetRot);
 		}
+		*/
 	}
 }

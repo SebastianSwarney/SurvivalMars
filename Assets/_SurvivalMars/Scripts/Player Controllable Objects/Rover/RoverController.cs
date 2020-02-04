@@ -188,7 +188,7 @@ public class RoverController : MonoBehaviour
 
 		float targetHeight = ((m_targetDistanceFromGround + transform.position.y) / (m_averageDistance)) * m_targetDistanceFromGround;
 
-		if (m_hasFlashlight)
+		if (m_movementControllState == MovementControllState.MovementEnabled)
 		{
 			targetHeight = ((m_targetDistanceFromGround + transform.position.y) / (m_averageDistance)) * m_targetDistanceFromGround;
 		}
