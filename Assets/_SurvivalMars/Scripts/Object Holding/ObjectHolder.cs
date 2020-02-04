@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class ObjectHolderEvent : UnityEvent { }
 
 public class ObjectHolder : MonoBehaviour
 {
+	public ObjectHolderEvent m_onObjectPickupEvent;
+	public ObjectHolderEvent m_onObjectDropEvent;
+
 	public LayerMask m_objectPickupLayers;
 
 	[HideInInspector]
@@ -27,6 +34,8 @@ public class ObjectHolder : MonoBehaviour
 
 		m_pickupObject = p_newObject;
 		m_holdingObject = true;
+
+		m_onObjectPickupEvent.Invoke();
 	}
 
 	public virtual void DeselectObject()
@@ -35,6 +44,8 @@ public class ObjectHolder : MonoBehaviour
 		m_pickupObject.m_currentHolder = null;
 		m_pickupObject = null;
 		m_holdingObject = false;
+
+		m_onObjectDropEvent.Invoke();
 	}
 
 	public bool CheckCollisionLayer(LayerMask p_layerMask, GameObject p_object)

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{82ec2c29-4823-4312-b0ff-9ba8c6e55692}">
+		<property name="assetPath">
+			<value>SE_Flashlight_Flicker_2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.1603541666666666</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{76655b58-f3f8-4f30-9524-5625ea658325}</destination>
+		</relationship>
+	</object>
+</objects>

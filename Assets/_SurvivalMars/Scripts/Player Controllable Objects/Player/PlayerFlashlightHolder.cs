@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerFlashlightHolder : ObjectHolder
 {
+	public ObjectHolderEvent m_onFlashLightFlickerEvent;
+	public ObjectHolderEvent m_onFlashLightBurstEvent;
+
 	public Transform m_objectHoldTransform;
 
 	public Transform m_crystalHoldTransform;
@@ -147,6 +150,8 @@ public class PlayerFlashlightHolder : ObjectHolder
 		p_targetLight.spotAngle = startAngle;
 		p_targetLight.intensity = startIntesity;
 
+		m_onFlashLightBurstEvent.Invoke();
+
 		m_flashLightComponent.DeactivateLight();
 
 		StartCoroutine(FlashlightRecharge());
@@ -166,6 +171,8 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 			if (flashlightOn)
 			{
+				m_onFlashLightFlickerEvent.Invoke();
+
 				m_flashLightComponent.ActivateLight();
 			}
 			else
