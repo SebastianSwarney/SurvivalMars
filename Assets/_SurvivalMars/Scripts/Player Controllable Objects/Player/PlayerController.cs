@@ -274,7 +274,7 @@ public class PlayerController : MonoBehaviour
 		public InputState m_inputState;
 	}
 
-	private bool IsGrounded()
+	public bool IsGrounded()
 	{
 		if (m_characterController.isGrounded)
 		{

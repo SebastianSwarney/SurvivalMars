@@ -7,6 +7,7 @@ public class PlayerFlashlightHolder : ObjectHolder
 	public ObjectHolderEvent m_onFlashLightFlickerEvent;
 	public ObjectHolderEvent m_onFlashLightBurstEvent;
 
+	public Transform m_objectHoldAnchor;
 	public Transform m_objectHoldTransform;
 
 	public Transform m_crystalHoldTransform;
@@ -38,12 +39,27 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 	private Vector3 m_followSmoothing;
 
+	public float m_verticalBobFreq;
+	public float m_verticalBobAmount;
+
+	private PlayerController m_palyerController;
+
+	private float m_bobingAnimationTimer;
+
+	public float m_damper;
+	public float m_stiffness;
+
+	private Vector3 m_springVelocity;
+	private Vector3 m_springSmoothVelocity;
+
 	private void Start()
 	{
 		m_viewCam = GetComponentInChildren<Camera>();
 
 		m_flashLightComponent = FindObjectOfType<FlashlightController>();
 		SelectObject(m_flashLightComponent.GetComponent<PickupObject>());
+
+		m_palyerController = GetComponent<PlayerController>();
 
 	}
 
@@ -105,9 +121,9 @@ public class PlayerFlashlightHolder : ObjectHolder
 		base.SelectObject(p_newObject);
 		m_flashLightComponent.ActivateLight();
 
-		m_pickupObject.transform.parent = m_objectHoldTransform;
-		m_pickupObject.transform.position = m_objectHoldTransform.position;
-		m_pickupObject.transform.rotation = m_objectHoldTransform.rotation;
+		//m_pickupObject.transform.parent = m_objectHoldTransform;
+		//m_pickupObject.transform.position = m_objectHoldTransform.position;
+		//m_pickupObject.transform.rotation = m_objectHoldTransform.rotation;
 		m_pickupObject.m_rigidbody.isKinematic = true;
 	}
 
@@ -211,6 +227,32 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 	private void HoldingObject()
 	{
+		//float force = (-stiffness * displacement) - (damping * m_jumpVelocity);
+		//m_pickupObject.m_rigidbody.AddForce((-m_stiffness * (m_pickupObject.transform.position - m_objectHoldTransform.position) - m_damper * m_pickupObject.m_rigidbody.velocity));
+
+		Vector3 springForce = -m_stiffness * (m_pickupObject.transform.position - m_objectHoldTransform.position);
+		Vector3 dampingForce = m_damper * m_springVelocity;
+		Vector3 force = springForce + Vector3.one - dampingForce;
+		Vector3 accel = force / 1f;
+		m_springVelocity = m_springVelocity + accel * Time.fixedDeltaTime;
+		Vector3 targetPos = m_pickupObject.transform.position + m_springVelocity * Time.fixedDeltaTime;
+
+		m_pickupObject.transform.position = m_objectHoldTransform.position;
+		m_pickupObject.transform.position = new Vector3(m_pickupObject.transform.position.x, targetPos.y, m_pickupObject.transform.position.z);
+
+		m_pickupObject.transform.rotation = m_objectHoldTransform.rotation;
+
+		if (m_palyerController.IsGrounded())
+		{
+			m_bobingAnimationTimer += Time.fixedDeltaTime;
+			float bobbingAnimationPhase = ((Mathf.Sin(Time.time * m_verticalBobFreq) * 0.5f) + 0.5f) * m_verticalBobAmount;
+			m_objectHoldTransform.position = m_objectHoldAnchor.position + Vector3.up * bobbingAnimationPhase;
+		}
+		else
+		{
+			m_bobingAnimationTimer = 0;
+		}
+
 		/*
 		if (!m_hasCrystal)
 		{
