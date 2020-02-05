@@ -60,10 +60,6 @@ public class EnemyDetection : MonoBehaviour
 
                 return true;
             }
-            else
-            {
-                Debug.Log("Hit object: " + hit.transform.gameObject.name);
-            }
         }
         if (!m_playerLost)
         {

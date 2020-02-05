@@ -42,7 +42,7 @@ public class EnemyMovement_BigEnemy : EnemyMovement_Base
     
     public override void MoveToLastKnownPosition()
     {
-        m_eyes.MoveEyes(m_lastPlayerPostion);
+        m_eyes.MoveEyes(new Vector3(m_lastPlayerPostion.x, transform.position.y, m_lastPlayerPostion.z));
         NearPosition(m_chaseSpeed, m_brakingDistance, m_stoppingDistance, new Vector3(m_lastPlayerPostion.x, transform.position.y, m_lastPlayerPostion.z));
     }
 

@@ -697,7 +697,7 @@ MonoBehaviour:
   m_closestDis: 10
   m_shakeAmount: 0.25
   m_shakeTime: 1
-  m_shakeObject: {fileID: 0}
+  m_shakeObject: {fileID: 3722660749560265945}
   m_debuggingTools: 1
   m_gizmos1: {r: 0, g: 1, b: 0.33720446, a: 1}
   m_gizmos2: {r: 1, g: 0.79041255, b: 0, a: 1}
