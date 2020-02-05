@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: event:/Player/Light Burst
   guid: 2cc0c421992e2543aaf263b841210889
   Banks:
-  - {fileID: -5349983995413076795}
+  - {fileID: -6920115239396023044}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -23,6 +23,24 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 934
+--- !u!114 &-6920115239396023044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD_SurvivalMars/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637164955875234177
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-5571825375648231914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,7 +76,7 @@ MonoBehaviour:
   lastModified: 637163655355079600
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &-4805985646706777288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +164,7 @@ MonoBehaviour:
   Path: event:/Player/Drop
   guid: 63825eaa35c02944a8777c49c874ea7c
   Banks:
-  - {fileID: -5349983995413076795}
+  - {fileID: -6920115239396023044}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -186,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD_SurvivalMars/Build/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637163655355149422
+  lastModified: 637164955875294015
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -206,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: -1037710358804555314}
-  - {fileID: -5349983995413076795}
+  - {fileID: -6920115239396023044}
   EditorEvents:
   - {fileID: 5300576755171615787}
   - {fileID: 845165671035175448}
@@ -215,10 +233,10 @@ MonoBehaviour:
   - {fileID: -1889284870081490264}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -5349983995413076795}
+  - {fileID: -6920115239396023044}
   StringsBanks:
   - {fileID: -1037710358804555314}
-  stringsBankWriteTime: 637163655355149422
+  stringsBankWriteTime: 637164955875294015
   cacheVersion: 3
 --- !u!114 &377565409625636588
 MonoBehaviour:
@@ -253,7 +271,7 @@ MonoBehaviour:
   Path: event:/Player/Flicker
   guid: 28bbb4a2a9081c48992961e4d487bcec
   Banks:
-  - {fileID: -5349983995413076795}
+  - {fileID: -6920115239396023044}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -276,7 +294,7 @@ MonoBehaviour:
   Path: event:/Player/Pickup
   guid: 929c3bf59bf0cf4582e096dbe5ad0257
   Banks:
-  - {fileID: -5349983995413076795}
+  - {fileID: -6920115239396023044}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -302,6 +320,24 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &4768171846809358637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD_SurvivalMars/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637164941200754750
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
 --- !u!114 &5300576755171615787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +353,7 @@ MonoBehaviour:
   Path: event:/Gnomed-00
   guid: ebb1232091ee8648a7f09798284bca62
   Banks:
-  - {fileID: -5349983995413076795}
+  - {fileID: -6920115239396023044}
   IsStream: 0
   Is3D: 1
   IsOneShot: 0

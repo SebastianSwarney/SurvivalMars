@@ -54,9 +54,15 @@ public class EnemyDetection : MonoBehaviour
         Collider[] cols = Physics.OverlapSphere(transform.position, m_chaseDetectionRadius, m_playerDetectionMask);
         if (cols.Length > 0)
         {
-            if (!Physics.Linecast(transform.position, cols[0].transform.position, ~m_nonBlockingTerrain))
+            RaycastHit hit;
+            if (!Physics.Linecast(transform.position, cols[0].transform.position,out hit, ~m_nonBlockingTerrain))
             {
+
                 return true;
+            }
+            else
+            {
+                Debug.Log("Hit object: " + hit.transform.gameObject.name);
             }
         }
         if (!m_playerLost)

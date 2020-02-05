@@ -169,7 +169,12 @@ public class PlayerFlashlightHolder : ObjectHolder
 
 		foreach (RaycastHit enemy in hits)
 		{
-			enemy.transform.GetComponent<EnemyController>().KillMe();
+            EnemyController newEnemy = enemy.transform.GetComponent<EnemyController>();
+            if (newEnemy != null)
+            {
+                newEnemy.KillMe();
+            }
+			
 		}
 
 		p_targetLight.spotAngle = startAngle;
