@@ -609,6 +609,7 @@ MonoBehaviour:
   - {fileID: 895865572}
   - {fileID: 5715424088295205721}
   - {fileID: 4651518136839492014}
+  m_angleToDisable: 90
 --- !u!212 &5345157039479433510
 SpriteRenderer:
   m_ObjectHideFlags: 0

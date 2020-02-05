@@ -23,6 +23,8 @@ public class HandMovementController : MonoBehaviour
 
 	private int m_numHandsUp = 0;
 
+    public LayerMask m_hitLayerHand;
+
 	private void Start()
 	{
 		m_isHandMoving = new bool[m_hands.Length];
@@ -94,10 +96,9 @@ public class HandMovementController : MonoBehaviour
 	{
 		Vector2 stepError = m_stepError * Random.insideUnitCircle;
 		RaycastHit hitInfo;
-		Physics.Raycast(
-			transform.position + transform.rotation * new Vector3(m_restPositions[i].x + stepError.x, 0f, m_restPositions[i].z + stepError.y),
+		Physics.Raycast(transform.position + transform.rotation * new Vector3(m_restPositions[i].x + stepError.x, 0f, m_restPositions[i].z + stepError.y),
 			Vector3.down,
-			out hitInfo);
+			out hitInfo,Mathf.Infinity, m_hitLayerHand);
 		return hitInfo.point;
 	}
 }

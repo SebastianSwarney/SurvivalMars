@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_lastPlayerPostion: {x: 0, y: 0, z: 0}
   m_floatingLayer:
     serializedVersion: 2
-    m_Bits: 1335
+    m_Bits: 2359
   m_targetHeightAboveGround: 5
   m_maxRaycastDistance: 1000
   m_maxBoost: 1
@@ -1175,6 +1175,9 @@ MonoBehaviour:
   m_stepDurationError: 0.1
   m_stepHeight: 3
   m_stepError: 0.25
+  m_hitLayerHand:
+    serializedVersion: 2
+    m_Bits: 6401
 --- !u!114 &1653782157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,6 +1225,7 @@ MonoBehaviour:
   - {fileID: 7520534447096004782}
   - {fileID: 7520534445940219802}
   - {fileID: 7520534445307257841}
+  m_angleToDisable: 90
 --- !u!212 &5025104676855273144
 SpriteRenderer:
   m_ObjectHideFlags: 0

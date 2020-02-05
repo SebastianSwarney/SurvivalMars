@@ -103,10 +103,7 @@ public class EnemyMovement_SmallEnemy : EnemyMovement_Base
             rotationAmount = 1.5f;
         }
         transform.Rotate(transform.up, ((rotationAmount > 1 ) ? m_rotateSpeed : rotationAmount * m_rotateSpeed) * Mathf.Sign(rotationSide)); 
-        if (m_rb.velocity.magnitude > 10)
-        {
-            print("RB Vel: " + m_rb.velocity.magnitude);
-        }
+
 
     }
 
