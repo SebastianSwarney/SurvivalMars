@@ -38,6 +38,11 @@ public class RoverController : MonoBehaviour
 
 	private float m_lastActivationTime;
 
+    [Header("Rover Stick Visual")]
+    public Transform m_stickVisual;
+    public float m_maxStickAngle;
+    public float m_rotateStickSpeed;
+
 	private void Start()
 	{
 		m_body = GetComponentInParent<Rigidbody>();
@@ -76,7 +81,9 @@ public class RoverController : MonoBehaviour
 		}
 
 		Float();
-	}
+        MoveStick();
+
+    }
 
 	public void OnPlayerExitInputDown()
 	{
@@ -201,6 +208,12 @@ public class RoverController : MonoBehaviour
 		transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
 	}
 
+
+    private void MoveStick()
+    {
+        Vector2 targetAngle = new Vector3(m_input.y * m_maxStickAngle, m_input.x * m_maxStickAngle);
+        m_stickVisual.transform.localRotation = Quaternion.Lerp(m_stickVisual.transform.rotation, Quaternion.Euler(targetAngle.x, targetAngle.y, 0), m_rotateStickSpeed);
+    }
 	private void OnDrawGizmos()
 	{
 		foreach (Transform thruster in m_bottomThrusters)
